@@ -1,0 +1,1 @@
+http://localhost/php_base_api/?route=/api_v1/user/user_list

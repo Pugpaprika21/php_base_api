@@ -1,8 +1,6 @@
 <?php
 
 use App\DI\Container;
-use App\Repository\UserableRepository;
-use App\Repository\UserRepository;
 
 $container = new Container();
 
@@ -21,9 +19,7 @@ $container->set("database", function () {
 
 $container->set("repository", function () {
     $this->get("database");
-    return [
-        UserableRepository::class => UserRepository::class,
-    ];
+    return require __DIR__ . "../../app/Repository/register.php";
 });
 
 $container->set("middleware", function () {

@@ -8,6 +8,7 @@ return [
         'app/DTO/Entity/',
         'app/DTO/Request/',
         'app/DTO/Respone/',
+        'app/DTO/Middleware/',
         'app/Repository/'
     ]
 ];

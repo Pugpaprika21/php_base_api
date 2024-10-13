@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\DTO\Request\AppRequest;
+
 try {
     require_once __DIR__ . "../app/util/helper.php";
     require_once __DIR__ . "../config/app_load_class.php";
@@ -19,13 +21,15 @@ try {
         $handler = $paths[$route][$controller][$method];
         unset($contrloler, $method);
 
+        $request = new AppRequest();
+
         if (is_callable($handler)) {
-            call_user_func($handler);
+            call_user_func($handler, $request);
         }
 
         if (is_array($handler)) {
             if ((is_array($handler) && class_exists($handler[0]) && method_exists($handler[0], $handler[1]))) {
-                call_user_func([new $handler[0]($container), $handler[1]]);
+                call_user_func([new $handler[0]($container), $handler[1]], $request);
             } else {
                 throw new Exception("Class or method not found.", 500);
             }
@@ -34,6 +38,5 @@ try {
         throw new Exception("Route not found.", 404);
     }
 } catch (Exception $e) {
-    echo json_encode(array("error" => $e->getMessage(), "code" => $e->getCode()));
-    exit;
+    echo json_encode(["message" => $e->getMessage(), "code" => $e->getCode()], JSON_PRETTY_PRINT);
 }

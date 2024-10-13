@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Exception;
+
 abstract class BaseController
 {
     /**
@@ -25,7 +27,7 @@ abstract class BaseController
 
         $data = ARR_UPPER_CASE ? arr_upr(["data" => $data]) : ["data" => $data];
 
-        return json_encode($data);
+        return json_encode($data, JSON_PRETTY_PRINT);
     }
 
     /**
@@ -35,9 +37,7 @@ abstract class BaseController
     protected function allow($method)
     {
         if ($_SERVER["REQUEST_METHOD"] != strtoupper($method)) {
-            http_response_code(405);
-            echo "method not allowed : " . $method;
-            exit;
+            throw new Exception("Method not allowed : " . $method, 405);
         }
     }
 

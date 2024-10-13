@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\DI\Containerable;
 use App\Controllers\BaseController as MistineController;
 use App\DTO\Http;
+use App\DTO\Request\AppableRequest;
 use App\Repository\UserableRepository;
 use Exception;
 
@@ -17,8 +18,8 @@ class UserController extends MistineController
         $this->repository = $container->repository(UserableRepository::class);
     }
 
-    public function getUsers()
-    {;
+    public function getUsers(AppableRequest $request)
+    {
         try {
             $users = $this->repository->findAll();
             echo $this->toJSON($users, Http::OK);

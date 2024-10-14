@@ -35,18 +35,37 @@ class Container implements Containerable
 
     /**
      * @param string $interface
+     * @param string $type
+     * @return object
+     * @throws Exception
+     */
+    private function getInstance($interface, $type)
+    {
+        if (interface_exists($interface) && strpos($interface, ucfirst($type)) !== false) {
+            if (!empty($this->building[$type])) {
+                $instance = $this->building[$type]()[$interface];
+                return str_or_object($instance);
+            }
+            throw new Exception(ucfirst($type) . " not found: {$interface}");
+        }
+        throw new Exception("Invalid interface or missing '{$type}' keyword: {$interface}");
+    }
+    
+    /**
+     * @param string $interface
      * @return object
      */
     public function repository($interface)
-    {
-        if (interface_exists($interface) && strpos($interface, "Repository") !== false) {
-            if (!empty($this->building["repository"])) {
-                $instance = $this->building["repository"]()[$interface];
-                return str_or_object($instance);
-            }
-            throw new Exception("Repository not found: {$interface}");
-        }
+    {   
+        return $this->getInstance($interface, "repository");
+    }
 
-        throw new Exception("Invalid interface or missing 'Repository' keyword: {$interface}");
+    /**
+     * @param string $interface
+     * @return object
+     */
+    public function service($interface)
+    {
+        return $this->getInstance($interface, "service");
     }
 }

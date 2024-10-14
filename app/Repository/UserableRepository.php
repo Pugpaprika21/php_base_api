@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-interface UserableRepository {
+use App\DTO\Request\AppableRequest;
 
-    /**
-     * @return array
-     */
+interface UserableRepository
+{
     public function findAll();
+    public function findOne(AppableRequest $request);
+    public function createUser(AppableRequest $request);
 }

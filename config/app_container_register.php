@@ -9,7 +9,7 @@ $container->set("database", function () {
         require_once __DIR__ . "../../app/Libs/RedBean.php";
         R::setup("" . env("DB_DRIVER") . ":host=" .  env("DB_HOST") . ";dbname=" . env("DB_NAME") . "", env("DB_USER"), env("DB_PASS"));
         R::debug(false);
-        R::ext("xdispense", function ($type) {
+        R::ext("xcreate", function ($type) {
             return R::getRedBean()->dispense($type);
         });
     } catch (Exception $e) {
@@ -20,6 +20,10 @@ $container->set("database", function () {
 $container->set("repository", function () {
     $this->get("database");
     return require __DIR__ . "../../app/Repository/register.php";
+});
+
+$container->set("service", function () { 
+    return require __DIR__ . "../../app/Services/register.php";
 });
 
 $container->set("middleware", function () {

@@ -24,4 +24,11 @@ interface Containerable
      * @throws Exception
      */
     public function repository($interface);
+
+    /**
+     * @param string $interface
+     * @return object
+     * @throws Exception
+     */
+    public function service($interface);
 }

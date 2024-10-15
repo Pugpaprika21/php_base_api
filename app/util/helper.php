@@ -99,8 +99,8 @@ function header_cors()
     header("Pragma: no-cache");
 }
 
-function env($key)
+function env($key = null)
 {
     $env = parse_ini_file("config/.env-local");
-    return !empty($env[$key]) ? $env[$key] : "";
+    return !empty($env[$key]) ? $env[$key] : $env;
 }

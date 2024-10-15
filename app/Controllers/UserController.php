@@ -6,52 +6,55 @@ use App\DI\Containerable;
 use App\Controllers\BaseController as MistineController;
 use App\DTO\Http;
 use App\DTO\Request\AppableRequest;
-use App\Repository\UserableRepository;
+use App\DTO\Respone\AppResponeable;
 use App\Services\UserableService;
 use Exception;
 
 class UserController extends MistineController
 {
-    private ?UserableRepository $repository;
-
     private ?UserableService $service;
 
     public function __construct(?Containerable $container)
     {
-        $this->repository = $container->repository(UserableRepository::class);
         $this->service = $container->service(UserableService::class);
     }
 
-    public function getUsers()
+    public function getUsers(AppableRequest $request, AppResponeable $respone)
     {
         try {
             $this->allow("GET");
-            $users = $this->repository->findAll();
-            echo $this->toJSON($users, Http::OK);
+
+            $data = $this->service->getUsers($request);
+
+            echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
         } catch (Exception $e) {
-            echo $this->toJSON(["error" => $e->getMessage()], Http::INTERNAL_SERVER_ERROR);
+            echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
         }
     }
 
-    public function getUser(AppableRequest $request)
-    {
-        try {
-            $this->allow("GET");
-            $user = $this->repository->findOne($request);
-            echo $this->toJSON($user, Http::OK);
-        } catch (Exception $e) {
-            echo $this->toJSON(["error" => $e->getMessage()], Http::INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public function createUser(AppableRequest $request)
+    public function creUsers(AppableRequest $request, AppResponeable $respone)
     {
         try {
             $this->allow("POST");
-            $result = $this->repository->createUser($request);
-            echo $this->toJSON($result, Http::CREATED);
+
+            $data = $this->service->creUsers($request);
+
+            echo $respone->status(Http::CREATED)->message("Created")->data($data)->toJSON();
         } catch (Exception $e) {
-            echo $this->toJSON(["error" => $e->getMessage()], Http::INTERNAL_SERVER_ERROR);
+            echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
+        }
+    }
+
+    public function updUsers(AppableRequest $request, AppResponeable $respone)
+    {
+        try {
+            $this->allow("PUT");
+
+            $data = $this->service->updUsers($request);
+
+            echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
+        } catch (Exception $e) {
+            echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
         }
     }
 }

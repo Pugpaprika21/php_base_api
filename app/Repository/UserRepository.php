@@ -3,63 +3,66 @@
 namespace App\Repository;
 
 use App\DTO\Entity\User;
-use App\DTO\Request\AppableRequest;
+use Exception;
 use R;
 
 class UserRepository implements UserableRepository
 {
-    private $tableName = "users";
-
-    public function findAll()
+    public function getUsers($sqlstmt, $bindParam)
     {
-        $data = [];
-        $users = R::findAll($this->tableName, "order by created_at desc");
-        if (count($users) > 0) {
-            foreach ($users as $user) {
-                $userDTO = new User(
-                    id: $user->id,
-                    username: $user->username,
-                    password: $user->password,
-                    first_name: $user->first_name,
-                    last_name: $user->last_name,
-                    email: $user->email,
-                    address: $user->address,
-                    phone_number: $user->phone_number,
-                    created_at: $user->created_at,
-                    updated_at: $user->updated_at
-                );
-                array_push($data, $userDTO);
+        try {
+            R::begin();
+            $rows = R::getAll($sqlstmt, $bindParam);
+
+            R::commit();
+            return $rows;
+        } catch (Exception $e) {
+            R::rollback();
+            throw new Exception("Error get data : " . $e->getMessage(), 500);
+        }
+    }
+
+    public function creUser($tableName, User $user)
+    {
+        try {
+            $userBean = R::xcreate($tableName);
+            foreach ($user as $property => $value) {
+                $userBean->$property = $value;
             }
+
+            $lastId = R::store($userBean);
+            return (int)$lastId;
+        } catch (Exception $e) {
+            R::rollback();
+            throw new Exception('Error storing in ' . $tableName . ': ' . $e->getMessage(), 500);
         }
-        return $data;
     }
 
-    public function findOne(AppableRequest $request)
+    public function updUsers($tableName, User $user, $whereClauseStr, $bindParam)
     {
-        $body = $request::app()->get();
-        if (!empty($body["user_id"])) {
-            $userId = (int)$body["user_id"];
-            return R::getAll("select * from users where id = ?", [$userId]);
+        try {
+            R::begin();
+    
+            $setClause = [];
+            $localBindParam = []; 
+    
+            foreach ($user as $property => $value) {
+                $setClause[] = "{$property} = ?";
+                $localBindParam[] = $value; 
+            }
+
+            if (!empty($bindParam)) {
+                $localBindParam = array_merge($localBindParam, $bindParam);
+            }
+    
+            $res = R::exec("update {$tableName} set " . join(", ", $setClause) . " {$whereClauseStr}", $localBindParam);
+            R::commit();
+    
+            return (int)$res;
+        } catch (Exception $e) {
+            R::rollback();
+            throw new Exception('Error updating in ' . $tableName . ': ' . $e->getMessage(), 500);
         }
-        return [];
     }
-
-    public function createUser(AppableRequest $request)
-    {
-        $body = $request::app()->json();
-        $user = R::xcreate($this->tableName);
-        $user->username = conText($body["username"]);
-        $user->password = conText($body["password"]);
-        $user->first_name = conText($body["first_name"]);
-        $user->last_name = conText($body["last_name"]);
-        $user->email = conText($body["email"]);
-        $user->address = conText($body["address"]);
-        $user->phone_number = conText($body["phone_number"]);
-        $user->created_at = date("Y-m-d H:i:s");
-        $user->updated_at = date("Y-m-d H:i:s");
-        $userId = R::store($user);
-        R::close();
-
-        return $userId;
-    }
+    
 }

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\DTO\Request\AppRequest;
+use App\DTO\Respone\AppRespone;
 
 try {
     require_once __DIR__ . "../app/util/helper.php";
@@ -22,14 +23,15 @@ try {
         unset($contrloler, $method);
 
         $request = new AppRequest();
+        $respone = new AppRespone();
 
         if (is_callable($handler)) {
-            call_user_func($handler, $request);
+            call_user_func($handler, $request, $respone);
         }
 
         if (is_array($handler)) {
             if ((is_array($handler) && class_exists($handler[0]) && method_exists($handler[0], $handler[1]))) {
-                call_user_func([new $handler[0]($container), $handler[1]], $request);
+                call_user_func([new $handler[0]($container), $handler[1]], $request, $respone);
             } else {
                 throw new Exception("Class or method not found.", 500);
             }
@@ -38,5 +40,6 @@ try {
         throw new Exception("Route not found.", 404);
     }
 } catch (Exception $e) {
+    http_response_code($e->getCode());
     echo json_encode(["message" => $e->getMessage(), "code" => $e->getCode()], JSON_PRETTY_PRINT);
 }

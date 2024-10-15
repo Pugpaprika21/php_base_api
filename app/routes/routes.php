@@ -5,10 +5,9 @@ use App\Controllers\UserController;
 return [
     "api_v1" => [
         "user" => [
-            "user_list" => [UserController::class, "getUsers"],
-            "user_create" => [UserController::class, "createUser"],
-            "user_one" => [UserController::class, "getUser"],
-
+            "get_users" => [UserController::class, "getUsers"],
+            "cre_users" => [UserController::class, "creUsers"],
+            "upd_users" => [UserController::class, "updUsers"],
         ]
     ],
     "api_v2" => []

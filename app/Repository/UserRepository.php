@@ -22,10 +22,10 @@ class UserRepository implements UserableRepository
         }
     }
 
-    public function creUser($tableName, User $user)
+    public function creUser(User $user)
     {
         try {
-            $userBean = R::xcreate($tableName);
+            $userBean = R::xcreate("users");
             foreach ($user as $property => $value) {
                 $userBean->$property = $value;
             }
@@ -34,11 +34,11 @@ class UserRepository implements UserableRepository
             return (int)$lastId;
         } catch (Exception $e) {
             R::rollback();
-            throw new Exception('Error storing in ' . $tableName . ': ' . $e->getMessage(), 500);
+            throw new Exception("Error storing in " . $e->getMessage(), 500);
         }
     }
 
-    public function updUsers($tableName, User $user, $whereClauseStr, $bindParam)
+    public function updUsers(User $user, $whereClauseStr, $bindParam)
     {
         try {
             R::begin();
@@ -55,13 +55,28 @@ class UserRepository implements UserableRepository
                 $localBindParam = array_merge($localBindParam, $bindParam);
             }
     
-            $res = R::exec("update {$tableName} set " . join(", ", $setClause) . " {$whereClauseStr}", $localBindParam);
+            $res = R::exec("update users set " . join(", ", $setClause) . " {$whereClauseStr}", $localBindParam);
             R::commit();
     
             return (int)$res;
         } catch (Exception $e) {
             R::rollback();
-            throw new Exception('Error updating in ' . $tableName . ': ' . $e->getMessage(), 500);
+            throw new Exception("Error updating " . $e->getMessage(), 500);
+        }
+    }
+
+    public function delUsers($whereClauseStr, $bindParam)
+    {
+        try {
+            R::begin();
+            
+            $res = R::exec("delete from users {$whereClauseStr}", $bindParam);
+            R::commit();
+    
+            return (int)$res;
+        } catch (Exception $e) {
+            R::rollback();
+            throw new Exception("Error deleting " . $e->getMessage(), 500);
         }
     }
     

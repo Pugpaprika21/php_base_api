@@ -22,16 +22,16 @@ class UserService implements UserableService
 
         $sqlstmt = "";
         $whereClause = [];
-        $bindParam = [];
+        $bindParams = [];
 
         $sqlstmt = "
             select id, username, password, first_name, last_name, email, address, phone_number, created_at, updated_at
             from users 
         ";
 
-        if (!empty($body["id"])) {
+        if (!empty($body["user_id"])) {
             $whereClause[] = " id = ? ";
-            $bindParam[] = $body["id"];
+            $bindParams[] = $body["user_id"];
         }
 
         if (count($whereClause)) {
@@ -41,7 +41,7 @@ class UserService implements UserableService
         $sqlstmt .= " order by created_at desc";
 
         $data = [];
-        $rows = $this->repository->getUsers($sqlstmt, $bindParam);
+        $rows = $this->repository->getUsers($sqlstmt, $bindParams);
         if (count($rows)) {
             foreach ($rows as $row) {
                 $user = new User();
@@ -80,7 +80,7 @@ class UserService implements UserableService
                 $user->created_at = date("Y-m-d H:i:s");
                 $user->updated_at = date("Y-m-d H:i:s");
 
-                $this->repository->creUser("users", $user);
+                $this->repository->creUser($user);
                 $rows++;
             }
         }
@@ -95,7 +95,7 @@ class UserService implements UserableService
 
         $whereClause = [];
         $whereClauseStr = "";
-        $bindParam = [];
+        $bindParams = [];
 
         if (!empty($body["users_rows"])) {
             foreach ($body["users_rows"] as $i => $row) {
@@ -109,20 +109,42 @@ class UserService implements UserableService
                 $user->phone_number = conText($row[$i]["phone_number"]);
                 $user->updated_at = date("Y-m-d H:i:s");
 
-                if (!empty($row[$i]["id"])) {
+                if (!empty($row[$i]["user_id"])) {
                     $whereClause[] = "id = ?"; 
-                    $bindParam[] = (int)$row[$i]["id"]; 
+                    $bindParams[] = (int)$row[$i]["user_id"]; 
                 }
 
                 if (count($whereClause)) {
                     $whereClauseStr = "where " . join(" and ", $whereClause);
                 }
 
-                $this->repository->updUsers("users", $user, $whereClauseStr, $bindParam);
+                $this->repository->updUsers($user, $whereClauseStr, $bindParams);
                 $rows++;
             }
         }
 
         return ["updated_rows" => $rows];
+    }
+
+    public function delUsers(AppRequest $request)
+    {
+        $body = $request::app()->get();
+
+        $whereClause = [];
+        $whereClauseStr = "";
+        $bindParams = [];
+
+        if (!empty($body["user_id"])) {
+            $whereClause[] = " id = ? ";
+            $bindParams[] = (int)conText($body["user_id"]);
+        }
+
+        if (count($whereClause)) {
+            $whereClauseStr = "where " . join(" and ", $whereClause);
+        }
+
+        $rows = $this->repository->delUsers($whereClauseStr, $bindParams);
+
+        return ["deleted_rows" => $rows];
     }
 }

@@ -57,4 +57,17 @@ class UserController extends MistineController
             echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
         }
     }
+
+    public function delUsers(AppableRequest $request, AppResponeable $respone)
+    {
+        try {
+            $this->allow("DELETE");
+
+            $data = $this->service->delUsers($request);
+
+            echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
+        } catch (Exception $e) {
+            echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
+        }
+    }
 }

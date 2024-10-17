@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\DTO\Request\AppRequest;
+use App\DTO\Request\AppRequestable;
 
 interface UserableService
 {
-    public function getUsers(AppRequest $request);
-    public function creUsers(AppRequest $request);
-    public function updUsers(AppRequest $request);
-    public function delUsers(AppRequest $request);
+    public function getUsers(AppRequestable $request);
+    public function creUsers(AppRequestable $request);
+    public function updUsers(AppRequestable $request);
+    public function delUsers(AppRequestable $request);
 }

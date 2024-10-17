@@ -6,22 +6,23 @@ $container = new Container();
 
 $container->set("database", function () {
     try {
-        $env = env();
-
-        $dsn = sprintf(
-            "%s:host=%s;dbname=%s",
-            $env["DB_DRIVER"],
-            $env["DB_HOST"],
-            $env["DB_NAME"]
-        );
-
         require_once __DIR__ . "../../app/Libs/RedBean.php";
 
-        R::setup($dsn, $env["DB_USER"], $env["DB_PASS"]);
-        R::debug(false);
-        R::ext("xcreate", function ($type) {
-            return R::getRedBean()->dispense($type);
-        });
+        $env = env();
+        if (!R::testConnection()) {
+            $dsn = sprintf(
+                "%s:host=%s;dbname=%s",
+                $env["DB_DRIVER"],
+                $env["DB_HOST"],
+                $env["DB_NAME"]
+            );
+            
+            R::setup($dsn, $env["DB_USER"], $env["DB_PASS"]);
+            R::debug($env["DB_DEBUG"]);
+            R::ext("xcreate", function ($type) {
+                return R::getRedBean()->dispense($type);
+            });
+        }
     } catch (Exception $e) {
         throw new Exception("Database connection error: " . $e->getMessage(), 500);
     }

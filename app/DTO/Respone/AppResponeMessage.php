@@ -9,14 +9,14 @@ class AppResponeMessage
      * @param array|object $data
      */
     private function __construct(
-        public int $status,
-        public string $message,
-        public array|object $data,
-        public int $totalRows
+        public $status,
+        public $message,
+        public $data,
+        public $total_rows
     ) {
         $this->status = $status;
         $this->data = $data;
-        $this->totalRows = $totalRows;
+        $this->total_rows = $total_rows;
     }
 
     /**
@@ -25,7 +25,7 @@ class AppResponeMessage
      * @param array|object $data
      * @return self
      */
-    public static function create(int $status, string $message, array|object $data): self
+    public static function create($status, $message, $data)
     {
         return new self($status, $message, $data, self::totalRows($data));
     }
@@ -34,7 +34,7 @@ class AppResponeMessage
      * @param array|object $data
      * @return integer
      */
-    private static function totalRows(array|object $data): int
+    private static function totalRows($data): int
     {
         if (is_array($data)) {
             return count($data);

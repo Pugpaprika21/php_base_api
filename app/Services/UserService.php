@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\DI\Containerable;
 use App\DTO\Entity\User;
-use App\DTO\Request\AppRequest;
+use App\DTO\Request\AppRequestable;
 use App\Repository\UserableRepository;
 
 class UserService implements UserableService
@@ -16,7 +16,7 @@ class UserService implements UserableService
         $this->repository = $container->repository(UserableRepository::class);
     }
 
-    public function getUsers(AppRequest $request)
+    public function getUsers(AppRequestable $request)
     {
         $body = $request::app()->json();
 
@@ -62,7 +62,7 @@ class UserService implements UserableService
         return $data;
     }
 
-    public function creUsers(AppRequest $request)
+    public function creUsers(AppRequestable $request)
     {
         $rows = 0;
         $body = $request::app()->json();
@@ -88,7 +88,7 @@ class UserService implements UserableService
         return ["created_rows" => $rows];
     }
 
-    public function updUsers(AppRequest $request)
+    public function updUsers(AppRequestable $request)
     {
         $rows = 0;
         $body = $request::app()->json();
@@ -126,7 +126,7 @@ class UserService implements UserableService
         return ["updated_rows" => $rows];
     }
 
-    public function delUsers(AppRequest $request)
+    public function delUsers(AppRequestable $request)
     {
         $body = $request::app()->get();
 

@@ -2,7 +2,7 @@
 
 namespace App\DTO\Request;
 
-interface AppableRequest
+interface AppRequestable
 {
     /**
      * @return AppRequest
@@ -10,7 +10,7 @@ interface AppableRequest
     public static function app();
 
     /**
-     * @return AppableRequest
+     * @return AppRequestable
      */
     public static function body();
 

@@ -3,28 +3,27 @@
 namespace App\Controllers;
 
 use App\DI\Containerable;
-use App\Controllers\BaseController as MistineController;
 use App\DTO\Http;
 use App\DTO\Request\AppRequestable;
 use App\DTO\Respone\AppResponeable;
-use App\Services\UserableService;
+use App\Services\UserGroupMasterableService;
 use Exception;
 
-class UserController extends MistineController
+class UserGroupMasterController extends BaseController
 {
-    private ?UserableService $service;
+    private ?UserGroupMasterableService $service;
 
-    public function __construct(?Containerable $container)
+    public function __construct(Containerable $container)
     {
-        $this->service = $container->service(UserableService::class);
+        $this->service = $container->service(UserGroupMasterableService::class);
     }
 
-    public function getUsers(AppRequestable $request, AppResponeable $respone)
+    public function getUserGroupMaster(AppRequestable $request, AppResponeable $respone)
     {
         try {
             $this->allow("GET");
 
-            $data = $this->service->getUsers($request);
+            $data = $this->service->getUserGroupMaster($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
         } catch (Exception $e) {
@@ -32,12 +31,12 @@ class UserController extends MistineController
         }
     }
 
-    public function creUsers(AppRequestable $request, AppResponeable $respone)
+    public function creUserGroupMaster(AppRequestable $request, AppResponeable $respone)
     {
         try {
             $this->allow("POST");
 
-            $data = $this->service->creUsers($request);
+            $data = $this->service->creUserGroupMaster($request);
 
             echo $respone->status(Http::CREATED)->message("Created")->data($data)->toJSON();
         } catch (Exception $e) {
@@ -45,12 +44,12 @@ class UserController extends MistineController
         }
     }
 
-    public function updUsers(AppRequestable $request, AppResponeable $respone)
+    public function updUserGroupMaster(AppRequestable $request, AppResponeable $respone)
     {
         try {
             $this->allow("PUT");
 
-            $data = $this->service->updUsers($request);
+            $data = $this->service->updUserGroupMaster($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
         } catch (Exception $e) {
@@ -58,12 +57,12 @@ class UserController extends MistineController
         }
     }
 
-    public function delUsers(AppRequestable $request, AppResponeable $respone)
+    public function delUserGroupMaster(AppRequestable $request, AppResponeable $respone)
     {
         try {
             $this->allow("DELETE");
 
-            $data = $this->service->delUsers($request);
+            $data = $this->service->delUserGroupMaster($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
         } catch (Exception $e) {

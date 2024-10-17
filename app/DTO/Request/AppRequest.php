@@ -20,7 +20,7 @@ namespace App\DTO\Request;
 
 use Exception;
 
-class AppRequest implements AppableRequest
+class AppRequest implements AppRequestable
 {
     private static $body = null;
 

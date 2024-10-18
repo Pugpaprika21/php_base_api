@@ -19,12 +19,12 @@ $container->set("database", function () {
             
             R::setup($dsn, $env["DB_USER"], $env["DB_PASS"]);
             R::debug($env["DB_DEBUG"]);
-            R::ext("xcreate", function ($type) {
+            R::ext("xdispense", function ($type) {
                 return R::getRedBean()->dispense($type);
             });
         }
-    } catch (Exception $e) {
-        throw new Exception("Database connection error: " . $e->getMessage(), 500);
+    } catch (Throwable $e) {
+        throw new Throwable("Database connection error: " . $e->getMessage(), 500);
     }
 });
 

@@ -9,6 +9,8 @@ return [
         'app/DTO/Request/',
         'app/DTO/Respone/',
         'app/DTO/Middleware/',
+        'app/Foundation/',
+        'app/Foundation/Validator/',
         'app/Repository/',
         'app/Services/',
     ]

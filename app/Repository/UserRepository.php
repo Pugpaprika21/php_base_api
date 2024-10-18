@@ -25,7 +25,7 @@ class UserRepository implements UserableRepository
     public function creUser(User $user)
     {
         try {
-            $userBean = R::xcreate("users");
+            $userBean = R::xdispense("users");
             foreach ($user as $property => $value) {
                 $userBean->$property = $value;
             }
@@ -79,5 +79,4 @@ class UserRepository implements UserableRepository
             throw new Exception("Error deleting " . $e->getMessage(), 500);
         }
     }
-    
 }

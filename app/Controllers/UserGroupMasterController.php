@@ -7,7 +7,7 @@ use App\DTO\Http;
 use App\DTO\Request\AppRequestable;
 use App\DTO\Respone\AppResponeable;
 use App\Services\UserGroupMasterableService;
-use Exception;
+use Throwable;
 
 class UserGroupMasterController extends BaseController
 {
@@ -26,7 +26,7 @@ class UserGroupMasterController extends BaseController
             $data = $this->service->getUserGroupMaster($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
         }
     }
@@ -39,7 +39,7 @@ class UserGroupMasterController extends BaseController
             $data = $this->service->creUserGroupMaster($request);
 
             echo $respone->status(Http::CREATED)->message("Created")->data($data)->toJSON();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
         }
     }
@@ -52,7 +52,7 @@ class UserGroupMasterController extends BaseController
             $data = $this->service->updUserGroupMaster($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
         }
     }
@@ -65,7 +65,7 @@ class UserGroupMasterController extends BaseController
             $data = $this->service->delUserGroupMaster($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
         }
     }

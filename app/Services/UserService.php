@@ -68,15 +68,15 @@ class UserService implements UserableService
         $body = $request::app()->json();
 
         if (!empty($body["users_rows"])) {
-            foreach ($body["users_rows"] as $i => $row) {
+            foreach ($body["users_rows"] as $row) {
                 $user = new User();
-                $user->username = conText($row[$i]["username"]);
-                $user->password = conText($row[$i]["password"]);
-                $user->first_name = conText($row[$i]["first_name"]);
-                $user->last_name = conText($row[$i]["last_name"]);
-                $user->email = conText($row[$i]["email"]);
-                $user->address = conText($row[$i]["address"]);
-                $user->phone_number = conText($row[$i]["phone_number"]);
+                $user->username = conText($row["username"]);
+                $user->password = conText($row["password"]);
+                $user->first_name = conText($row["first_name"]);
+                $user->last_name = conText($row["last_name"]);
+                $user->email = conText($row["email"]);
+                $user->address = conText($row["address"]);
+                $user->phone_number = conText($row["phone_number"]);
                 $user->created_at = date("Y-m-d H:i:s");
                 $user->updated_at = date("Y-m-d H:i:s");
 
@@ -98,20 +98,20 @@ class UserService implements UserableService
         $bindParams = [];
 
         if (!empty($body["users_rows"])) {
-            foreach ($body["users_rows"] as $i => $row) {
+            foreach ($body["users_rows"] as $row) {
                 $user = new User();
-                $user->username = conText($row[$i]["username"]);
-                $user->password = conText($row[$i]["password"]);
-                $user->first_name = conText($row[$i]["first_name"]);
-                $user->last_name = conText($row[$i]["last_name"]);
-                $user->email = conText($row[$i]["email"]);
-                $user->address = conText($row[$i]["address"]);
-                $user->phone_number = conText($row[$i]["phone_number"]);
+                $user->username = conText($row["username"]);
+                $user->password = conText($row["password"]);
+                $user->first_name = conText($row["first_name"]);
+                $user->last_name = conText($row["last_name"]);
+                $user->email = conText($row["email"]);
+                $user->address = conText($row["address"]);
+                $user->phone_number = conText($row["phone_number"]);
                 $user->updated_at = date("Y-m-d H:i:s");
 
-                if (!empty($row[$i]["user_id"])) {
+                if (!empty($row["user_id"])) {
                     $whereClause[] = "id = ?"; 
-                    $bindParams[] = (int)$row[$i]["user_id"]; 
+                    $bindParams[] = (int)$row["user_id"]; 
                 }
 
                 if (count($whereClause)) {

@@ -2,7 +2,7 @@
 
 namespace App\DI;
 
-use Exception;
+use Throwable;
 
 class Container implements Containerable
 {
@@ -30,14 +30,14 @@ class Container implements Containerable
         if (isset($this->building[$container])) {
             return ($this->building[$container])();
         }
-        throw new Exception("Container not found: {$container}");
+        throw new Throwable("Container not found: {$container}");
     }
 
     /**
      * @param string $interface
      * @param string $type
      * @return object
-     * @throws Exception
+     * @throws Throwable
      */
     private function getInstance($interface, $type)
     {
@@ -46,9 +46,9 @@ class Container implements Containerable
                 $instance = $this->building[$type]()[$interface];
                 return str_or_object($instance);
             }
-            throw new Exception(ucfirst($type) . " not found: {$interface}");
+            throw new Throwable(ucfirst($type) . " not found: {$interface}");
         }
-        throw new Exception("Invalid interface or missing '{$type}' keyword: {$interface}");
+        throw new Throwable("Invalid interface or missing '{$type}' keyword: {$interface}");
     }
     
     /**

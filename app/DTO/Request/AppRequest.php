@@ -18,7 +18,7 @@ $allData = AppRequest::app()->any();
 
 namespace App\DTO\Request;
 
-use Exception;
+use Throwable;
 
 class AppRequest implements AppRequestable
 {
@@ -54,7 +54,7 @@ class AppRequest implements AppRequestable
             case "any":
                 return $this->toArray();
             default:
-                throw new Exception("Method {$method} does not exist");
+                throw new Throwable("Method {$method} does not exist");
         }
     }
 

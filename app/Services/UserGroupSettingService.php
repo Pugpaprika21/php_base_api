@@ -38,6 +38,7 @@ class UserGroupSettingService implements UserGroupSettingableService
                         $paramDto->updated_at = date("Y-m-d H:i:s");
 
                         $this->repository->creUsersGroupSetting($paramDto);
+                        $rows++;
                     }
                 }
             }
@@ -67,6 +68,4 @@ class UserGroupSettingService implements UserGroupSettingableService
 
         return ["created_rows" => $rows];
     }
-
-    public function delUsersGroupSetting(AppRequestable $request) {}
 }

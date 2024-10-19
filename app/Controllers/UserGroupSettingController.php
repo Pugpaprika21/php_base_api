@@ -43,6 +43,4 @@ class UserGroupSettingController extends BaseController
             echo $respone->status(Http::INTERNAL_SERVER_ERROR)->message($e->getMessage())->toJSON();
         }
     }
-
-    public function delUsersGroupSetting(AppRequestable $request, AppResponeable $respone) {}
 }

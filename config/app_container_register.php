@@ -23,8 +23,8 @@ $container->set("database", function () {
                 return R::getRedBean()->dispense($type);
             });
         }
-    } catch (Throwable $e) {
-        throw new Throwable("Database connection error: " . $e->getMessage(), 500);
+    } catch (Exception $e) {
+        throw new Exception("Database connection error: " . $e->getMessage(), 500);
     }
 });
 

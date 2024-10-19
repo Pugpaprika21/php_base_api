@@ -33,13 +33,13 @@ try {
             if ((is_array($handler) && class_exists($handler[0]) && method_exists($handler[0], $handler[1]))) {
                 call_user_func([new $handler[0]($container), $handler[1]], $request, $respone);
             } else {
-                throw new Throwable("Class or method not found.", 500);
+                throw new Exception("Class or method not found.", 500);
             }
         }
     } else {
-        throw new Throwable("Route not found.", 404);
+        throw new Exception("Route not found.", 404);
     }
-} catch (Throwable $e) {
+} catch (Exception $e) {
     http_response_code($e->getCode());
     echo json_encode(["message" => $e->getMessage(), "code" => $e->getCode()], JSON_PRETTY_PRINT);
 }

@@ -2,19 +2,19 @@
 
 namespace App\Repository;
 
-use App\DTO\Entity\User;
+use App\DTO\Entity\UserGroup;
 use Exception;
 use R;
 
-class UserRepository implements UserableRepository
+class UserGroupRepository implements UserGroupableRepository
 {
-    public function getUsers($sqlstmt, $bindParamss)
+    public function getUserGroup($sqlstmt, $bindParams)
     {
         try {
             R::begin();
-            $rows = R::getAll($sqlstmt, $bindParamss);
+            $rows = R::getAll($sqlstmt, $bindParams);
             R::commit();
-      
+
             return $rows;
         } catch (Exception $e) {
             R::rollback();
@@ -22,10 +22,10 @@ class UserRepository implements UserableRepository
         }
     }
 
-    public function creUser(User $paramDto)
+    public function creUserGroup(UserGroup $paramDto)
     {
         try {
-            $userBean = R::xdispense("users");
+            $userBean = R::xdispense("users_group");
             foreach ($paramDto as $property => $value) {
                 $userBean->$property = $value;
             }
@@ -38,7 +38,7 @@ class UserRepository implements UserableRepository
         }
     }
 
-    public function updUsers(User $paramDto, $whereClauseStr, $bindParams)
+    public function updUserGroup(UserGroup $paramDto, $whereClauseStr, $bindParams)
     {
         try {
             R::begin();
@@ -55,7 +55,7 @@ class UserRepository implements UserableRepository
                 $localBindParam = array_merge($localBindParam, $bindParams);
             }
 
-            $res = R::exec("update users set " . join(", ", $setClause) . " {$whereClauseStr}", $localBindParam);
+            $res = R::exec("update users_group set " . join(", ", $setClause) . " {$whereClauseStr}", $localBindParam);
             R::commit();
 
             return (int)$res;
@@ -65,12 +65,12 @@ class UserRepository implements UserableRepository
         }
     }
 
-    public function delUsers($whereClauseStr, $bindParams)
+    public function delUserGroup($whereClauseStr, $bindParams)
     {
         try {
             R::begin();
 
-            $res = R::exec("delete from users {$whereClauseStr}", $bindParams);
+            $res = R::exec("delete from users_group {$whereClauseStr}", $bindParams);
             R::commit();
 
             return (int)$res;

@@ -6,24 +6,24 @@ use App\DI\Containerable;
 use App\DTO\Http;
 use App\DTO\Request\AppRequestable;
 use App\DTO\Respone\AppResponeable;
-use App\Services\UserGroupMasterableService;
+use App\Services\UserGroupableService;
 use Throwable;
 
-class UserGroupMasterController extends BaseController
+class UserGroupController extends BaseController
 {
-    private ?UserGroupMasterableService $service;
+    private ?UserGroupableService $service;
 
     public function __construct(Containerable $container)
     {
-        $this->service = $container->service(UserGroupMasterableService::class);
+        $this->service = $container->service(UserGroupableService::class);
     }
 
-    public function getUserGroupMaster(AppRequestable $request, AppResponeable $respone)
+    public function getUserGroup(AppRequestable $request, AppResponeable $respone)
     {
         try {
             $this->allow("GET");
 
-            $data = $this->service->getUserGroupMaster($request);
+            $data = $this->service->getUserGroup($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
         } catch (Throwable $e) {
@@ -31,12 +31,12 @@ class UserGroupMasterController extends BaseController
         }
     }
 
-    public function creUserGroupMaster(AppRequestable $request, AppResponeable $respone)
+    public function creUserGroup(AppRequestable $request, AppResponeable $respone)
     {
         try {
             $this->allow("POST");
 
-            $data = $this->service->creUserGroupMaster($request);
+            $data = $this->service->creUserGroup($request);
 
             echo $respone->status(Http::CREATED)->message("Created")->data($data)->toJSON();
         } catch (Throwable $e) {
@@ -44,12 +44,12 @@ class UserGroupMasterController extends BaseController
         }
     }
 
-    public function updUserGroupMaster(AppRequestable $request, AppResponeable $respone)
+    public function updUserGroup(AppRequestable $request, AppResponeable $respone)
     {
         try {
             $this->allow("PUT");
 
-            $data = $this->service->updUserGroupMaster($request);
+            $data = $this->service->updUserGroup($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
         } catch (Throwable $e) {
@@ -57,12 +57,12 @@ class UserGroupMasterController extends BaseController
         }
     }
 
-    public function delUserGroupMaster(AppRequestable $request, AppResponeable $respone)
+    public function delUserGroup(AppRequestable $request, AppResponeable $respone)
     {
         try {
             $this->allow("DELETE");
 
-            $data = $this->service->delUserGroupMaster($request);
+            $data = $this->service->delUserGroup($request);
 
             echo $respone->status(Http::OK)->message("Success")->data($data)->toJSON();
         } catch (Throwable $e) {

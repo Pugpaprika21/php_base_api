@@ -46,9 +46,9 @@ class UserGroupService implements UserGroupableService
             foreach ($rows as $row) {
                 $user = new UserGroup();
                 $user->id = $row["id"];
-                $user->group_name = conText($row["group_name"]);
-                $user->group_code = conText($row["group_code"]);
-                $user->group_description = conText($row["group_description"]);
+                $user->group_name = $row["group_name"];
+                $user->group_code = $row["group_code"];
+                $user->group_description = $row["group_description"];
                 $user->created_at = $row["created_at"];
                 $user->updated_at = $row["updated_at"];
                 $data[] = $user;

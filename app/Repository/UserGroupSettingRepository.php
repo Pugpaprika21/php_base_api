@@ -8,7 +8,47 @@ use R;
 
 class UserGroupSettingRepository implements UserGroupSettingableRepository
 {
-    public function getUsersGroupSetting($sqlstmt, $bindParams) {}
+    public function getCountHasGroupSetting($sqlstmt, $bindParams)
+    {
+        try {
+            R::begin();
+            $rows = R::getAll($sqlstmt, $bindParams);
+            R::commit();
+
+            return $rows;
+        } catch (Exception $e) {
+            R::rollback();
+            throw new Exception("Error get data : " . $e->getMessage(), 500);
+        }
+    }
+
+    public function getUsersGroup($sqlstmt, $bindParams)
+    {
+        try {
+            R::begin();
+            $rows = R::getAll($sqlstmt, $bindParams);
+            R::commit();
+
+            return $rows;
+        } catch (Exception $e) {
+            R::rollback();
+            throw new Exception("Error get data : " . $e->getMessage(), 500);
+        }
+    }
+
+    public function getUsersGroupSetting($sqlstmt, $bindParams)
+    {
+        try {
+            R::begin();
+            $rows = R::getAll($sqlstmt, $bindParams);
+            R::commit();
+
+            return $rows;
+        } catch (Exception $e) {
+            R::rollback();
+            throw new Exception("Error get data : " . $e->getMessage(), 500);
+        }
+    }
 
     public function creUsersGroupSetting(UserGroupSetting $paramDto)
     {

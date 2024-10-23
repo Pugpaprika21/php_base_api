@@ -26,7 +26,7 @@ try {
         $respone = new AppRespone();
 
         if (is_callable($handler)) {
-            call_user_func($handler, $request, $respone);
+            call_user_func($handler, $container, $request, $respone);
         }
 
         if (is_array($handler)) {

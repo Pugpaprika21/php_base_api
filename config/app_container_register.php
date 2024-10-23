@@ -4,11 +4,16 @@ use App\DI\Container;
 
 $container = new Container();
 
+$container->set("env", function () { 
+    return env();
+});
+
 $container->set("database", function () {
     try {
         require_once __DIR__ . "../../app/Libs/RedBean.php";
 
-        $env = env();
+        $env = $this->get("env");
+        
         if (!R::testConnection()) {
             $dsn = sprintf(
                 "%s:host=%s;dbname=%s",

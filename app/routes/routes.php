@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\GenerateObjController;
 use App\Controllers\UserController;
 use App\Controllers\UserGroupController;
 use App\Controllers\UserGroupSettingController;
@@ -24,5 +25,11 @@ return [
             "del_usergroupsetting" => [UserGroupSettingController::class, "delUsersGroupSetting"],
         ]
     ],
-    "api_v2" => []
+    "api_v2" => [],
+    // ************************* SETTINGS ************************
+    "api_setting" => [
+        "obj" => [
+            "cre_generate" => [GenerateObjController::class, "generate"],
+        ]
+    ]
 ];

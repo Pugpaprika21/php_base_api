@@ -59,6 +59,16 @@ abstract class BaseController
         return $output;
     }
 
+    protected function bearerTokens()
+    {
+        $headers = array_change_key_case(getallheaders(), CASE_LOWER);
+        if (!isset($headers['authorization'])) {
+            return null;
+        }
+
+        return trim(str_replace('Bearer', '', $headers['authorization']));
+    }
+
     /**
      * @param array|object $data
      * @param integer $statusCode

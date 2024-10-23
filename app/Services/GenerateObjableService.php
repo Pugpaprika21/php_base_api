@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\DTO\Request\AppRequestable;
 
-interface GenerateObjableSarvice
+interface GenerateObjableService
 {
     public function generate(AppRequestable $request);
 }

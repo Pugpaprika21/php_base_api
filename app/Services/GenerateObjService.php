@@ -6,7 +6,7 @@ use App\DI\Containerable;
 use App\DTO\Request\AppRequestable;
 use App\Repository\GenerateObjableRepository;
 
-class GenerateObjSarvice implements GenerateObjableSarvice
+class GenerateObjService implements GenerateObjableService
 {
     private ?GenerateObjableRepository $repository;
 
@@ -19,10 +19,6 @@ class GenerateObjSarvice implements GenerateObjableSarvice
     {
         $data = [];
         $body = $request::app()->json();
-    
-        if (empty($body["generate_rows"])) {
-            return $data;
-        }
     
         foreach ($body["generate_rows"] as $row) {
             if (empty($row["tb_name"]) || empty($row["class_name"])) {

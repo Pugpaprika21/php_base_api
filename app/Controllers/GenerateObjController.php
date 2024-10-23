@@ -8,21 +8,21 @@ use App\DTO\Request\AppRequestable;
 use App\DTO\Respone\AppResponeable;
 use App\Foundation\Validator\Validable;
 use App\Foundation\Validator\Validator;
-use App\Services\GenerateObjableSarvice;
+use App\Services\GenerateObjableService;
 use Throwable;
 
 class GenerateObjController extends BaseController
 {
-    private $env = null;
+    private ?array $env;
 
-    private GenerateObjableSarvice $service;
+    private ?GenerateObjableService $service;
 
     private ?Validable $validator;
 
-    public function __construct(Containerable $container)
+    public function __construct(?Containerable $container)
     {
         $this->env = $container->get("env");
-        $this->service = $container->service(GenerateObjableSarvice::class);
+        $this->service = $container->service(GenerateObjableService::class);
         $this->validator = new Validator();
     }
 

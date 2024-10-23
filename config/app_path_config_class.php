@@ -10,6 +10,7 @@ return [
         'app/DTO/Respone/',
         'app/DTO/Middleware/',
         'app/Foundation/',
+        'app/Route/',
         'app/Foundation/Validator/',
         'app/Repository/',
         'app/Services/',

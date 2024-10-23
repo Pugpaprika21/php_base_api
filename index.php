@@ -12,9 +12,9 @@ try {
 
     $app = route_parse_urls();
 
-    $route = trim($app["route"]);
-    $controller = trim($app["controller"]);
-    $method = trim($app["method"]);
+    $route = $app["route"];
+    $controller = $app["controller"];
+    $method = $app["method"];
 
     $paths = require __DIR__ . "../app/routes/routes.php";
 

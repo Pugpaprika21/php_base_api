@@ -62,9 +62,9 @@ function route_parse_urls()
     //$path = $controller . "/" . $method;
 
     return [
-        "route" => $route,
-        "controller" => $controller,
-        "method" => $method,
+        "route" => trim($route),
+        "controller" => trim($controller),
+        "method" => trim($method),
         //"path" => $path,
     ];
 }

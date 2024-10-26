@@ -6,6 +6,7 @@ use App\DI\Containerable;
 use App\DTO\Http;
 use App\DTO\Request\AppRequestable;
 use App\DTO\Respone\AppResponeable;
+use App\Foundation\Env\DotEnvEnvironment;
 use App\Foundation\Validator\Validable;
 use App\Foundation\Validator\Validator;
 use App\Services\GenerateObjableService;
@@ -13,15 +14,14 @@ use Throwable;
 
 class GenerateObjController extends BaseController
 {
-    private ?array $env;
-
     private ?GenerateObjableService $service;
 
     private ?Validable $validator;
 
     public function __construct(?Containerable $container)
     {
-        $this->env = $container->get("env");
+        $container->get(DotEnvEnvironment::class);
+        
         $this->service = $container->service(GenerateObjableService::class);
         $this->validator = new Validator();
     }
@@ -42,7 +42,7 @@ class GenerateObjController extends BaseController
                 return;
             }
 
-            if ($this->env["TOKEN_JWT"] != $this->bearerTokens()) {
+            if ($_ENV["TOKEN_JWT"] != $this->bearerTokens()) {
                 echo $respone->status(Http::UNAUTHORIZED)->message("unauthorized")->data($this->validator->errors())->toJSON();
                 return;
             }

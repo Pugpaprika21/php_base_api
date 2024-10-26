@@ -11,6 +11,7 @@ return [
         'app/DTO/Middleware/',
         'app/Foundation/',
         'app/Route/',
+        'app/Foundation/Env/',
         'app/Foundation/Validator/',
         'app/Repository/',
         'app/Services/',

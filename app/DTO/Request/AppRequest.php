@@ -18,6 +18,7 @@ $allData = AppRequest::app()->any();
 
 namespace App\DTO\Request;
 
+use Exception;
 use Throwable;
 
 class AppRequest implements AppRequestable
@@ -86,5 +87,16 @@ class AppRequest implements AppRequestable
     public function toStdClass()
     {
         return json_decode(json_encode(self::$body));
+    }
+
+    /**
+     * @param string $method
+     * @return void
+     */
+    public function allowed($method)
+    {
+        if ($_SERVER["REQUEST_METHOD"] != strtoupper($method)) {
+            throw new Exception("Method not allowed : " . $method, 405);
+        }
     }
 }

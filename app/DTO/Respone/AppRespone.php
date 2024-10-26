@@ -57,9 +57,16 @@ class AppRespone extends Http implements AppResponeable
     public function toJSON()
     {
         http_response_code($this->status);
-        header("Content-Type: application/json; charset=utf-8");
 
-        return json_encode(AppResponeMessage::create($this->status, $this->message, $this->data));
+        $resp = null;
+        if (ARR_UPPER_CASE) {
+            $resp = arr_upr(AppResponeMessage::create($this->status, $this->message, $this->data));
+        } else {
+            $resp = AppResponeMessage::create($this->status, $this->message, $this->data);
+        }
+
+        header("Content-Type: application/json; charset=utf-8");
+        return json_encode($resp);
     }
 
     /**

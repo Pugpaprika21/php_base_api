@@ -3,7 +3,6 @@
 namespace App\DI;
 
 use Exception;
-use Throwable;
 
 class Container implements Containerable
 {

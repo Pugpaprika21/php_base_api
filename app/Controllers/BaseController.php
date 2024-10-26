@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use Throwable;
+use Exception;
 
 abstract class BaseController
 {
@@ -37,7 +37,7 @@ abstract class BaseController
     protected function allow($method)
     {
         if ($_SERVER["REQUEST_METHOD"] != strtoupper($method)) {
-            throw new Throwable("Method not allowed : " . $method, 405);
+            throw new Exception("Method not allowed : " . $method, 405);
         }
     }
 

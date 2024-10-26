@@ -40,6 +40,7 @@ try {
         throw new Exception("Route not found.", 404);
     }
 } catch (Exception $e) {
+    header("Content-Type: application/json; charset=utf-8");
     http_response_code($e->getCode());
     echo json_encode(["message" => $e->getMessage(), "code" => $e->getCode()], JSON_PRETTY_PRINT);
 }

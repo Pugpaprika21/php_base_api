@@ -23,4 +23,10 @@ interface AppRequestable
      * @return mixed
      */
     public function toStdClass();
+
+    /**
+     * @param string $method
+     * @return void
+     */
+    public function allowed($method);
 }

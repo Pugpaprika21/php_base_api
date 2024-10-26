@@ -27,15 +27,14 @@ try {
 
         if (is_callable($handler)) {
             call_user_func($handler, $container, $request, $respone);
+            return;
         }
 
-        if (is_array($handler)) {
-            if ((is_array($handler) && class_exists($handler[0]) && method_exists($handler[0], $handler[1]))) {
-                call_user_func([new $handler[0]($container), $handler[1]], $request, $respone);
-            } else {
-                throw new Exception("Class or method not found.", 500);
-            }
-        }
+        if ((is_array($handler) && class_exists($handler[0]) && method_exists($handler[0], $handler[1]))) {
+            call_user_func([new $handler[0]($container), $handler[1]], $request, $respone);
+            return;
+        } 
+
     } else {
         throw new Exception("Route not found.", 404);
     }

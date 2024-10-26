@@ -13,6 +13,12 @@ interface Containerable
 
     /**
      * @param string $container
+     * @return boolean
+     */
+    public function has($container);
+
+    /**
+     * @param string $container
      * @return mixed
      * @throws Exception
      */

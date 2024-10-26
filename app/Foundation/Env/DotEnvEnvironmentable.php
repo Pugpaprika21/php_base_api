@@ -14,4 +14,10 @@ interface DotEnvEnvironmentable
      * @return array
      */
     public function all();
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function key($key);
 }

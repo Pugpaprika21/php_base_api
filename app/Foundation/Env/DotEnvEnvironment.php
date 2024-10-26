@@ -48,4 +48,13 @@ class DotEnvEnvironment implements DotEnvEnvironmentable
     {
         return $this->allEnvSetting;
     }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function key($key)
+    {
+        return $this->allEnvSetting[$key];
+    }
 }

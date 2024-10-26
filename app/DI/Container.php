@@ -23,6 +23,15 @@ class Container implements Containerable
 
     /**
      * @param string $container
+     * @return boolean
+     */
+    public function has($container)
+    {
+        return !empty($this->building[$container]) ? true : false;
+    }
+
+    /**
+     * @param string $container
      * @return mixed
      */
     public function get($container)
@@ -50,13 +59,13 @@ class Container implements Containerable
         }
         throw new Exception("Invalid interface or missing '{$type}' keyword: {$interface}");
     }
-    
+
     /**
      * @param string $interface
      * @return object
      */
     public function repository($interface)
-    {   
+    {
         return $this->getInstance($interface, "repository");
     }
 

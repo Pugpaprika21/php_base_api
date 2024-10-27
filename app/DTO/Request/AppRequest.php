@@ -99,4 +99,17 @@ class AppRequest implements AppRequestable
             throw new Exception("Method not allowed : " . $method, 405);
         }
     }
+
+    /**
+     * @param array $arrJsonStr
+     * @return boolean
+     */
+    public function jsonValidate($jsonInput)
+    {
+        $jsonStr = is_array($jsonInput) ? json_encode($jsonInput) : $jsonInput;
+
+        json_decode($jsonStr);
+
+        return json_last_error() === JSON_ERROR_NONE;
+    }
 }

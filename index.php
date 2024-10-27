@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\DTO\Request\AppRequest;
 use App\DTO\Respone\AppRespone;
+use App\Foundation\Env\DotEnvEnvironment;
 
 try {
     require_once __DIR__ . "../app/util/helper.php";
@@ -24,6 +25,8 @@ try {
 
         $request = new AppRequest();
         $respone = new AppRespone();
+
+        $container->get(DotEnvEnvironment::class);
 
         if (is_callable($handler)) {
             call_user_func($handler, $container, $request, $respone);

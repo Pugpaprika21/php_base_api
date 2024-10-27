@@ -29,4 +29,10 @@ interface AppRequestable
      * @return void
      */
     public function allowed($method);
+
+    /**
+     * @param array $arrJsonStr
+     * @return boolean
+     */
+    public function jsonValidate($arrJsonStr); 
 }
